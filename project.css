@@ -1,0 +1,40 @@
+body{
+    background-color: #FFFFFF;
+    text-align: center;
+}
+
+svg{
+    width: 1000px;
+    height: 625px;
+    border: 1px solid black;
+}
+
+.notes{
+    position: relative;
+    float:left;
+    left: 18.5%;
+    background-color: greenyellow;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 20px;
+    top: 1.7%;
+}
+
+.dimensions{
+    float:left;
+    position: relative;
+    top: 312.5px;
+    left: 20px;
+    background-color: darkgrey;
+    padding: 10px;
+}
+
+.dimensions:hover{
+    cursor: pointer;
+    background-color: grey;
+    font-weight: bold;
+}
+
+.dimensions:active{
+    background-color: red;
+}
