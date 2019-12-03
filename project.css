@@ -21,20 +21,28 @@ svg{
 }
 
 .dimensions{
+    width: 80px;
+}
+
+.dimensions:hover{
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 125%;
+}
+
+.container:active{
+    background-color: grey;
+}
+
+.container{
+    border: 1px solid black;
+    text-align: center;
+    width: 100px;
+    height: 50px;
     float:left;
     position: relative;
     top: 312.5px;
     left: 20px;
     background-color: darkgrey;
     padding: 10px;
-}
-
-.dimensions:hover{
-    cursor: pointer;
-    background-color: grey;
-    font-weight: bold;
-}
-
-.dimensions:active{
-    background-color: red;
 }
