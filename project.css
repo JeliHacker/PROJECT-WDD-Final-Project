@@ -9,6 +9,8 @@ svg{
     width: 1000px;
     height: 625px;
     border: 1px solid black;
+    position: relative;
+    left: auto;
 }
 
 .notes{
@@ -127,4 +129,54 @@ rect:hover{
     width: 60%;
     text-align: center;
     display: inline-block;
+}
+
+.down
+{
+width: 40px;
+}
+
+.left
+{
+    
+    background-color: aliceblue;
+    float:left;
+    border: 1px solid black;
+    height: 625px;
+    width: 15%;
+    margin-left: 1%;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 205px;
+}
+
+.left *
+{
+    line-height: 45px;
+}
+
+.left h4
+{
+    font-size: 20px;
+}
+
+
+.notes2{
+    position: relative;
+    background-color: greenyellow;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 30px;
+    color: black;
+    float: left;
+    left: 3.5%;
+}
+
+.notes2:hover{
+    background-color: white;
+}
+
+.notes2:active
+{
+    background-color: red;
 }

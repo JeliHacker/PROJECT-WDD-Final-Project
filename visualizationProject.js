@@ -3,9 +3,12 @@ var margins = {top: 10, right: 50, bottom: 50, left:50}
 
 var svg = d3.select("svg");
 
-var toggleWinCount = 0;
+var toggleWinCount = 1;
 
-var swish = document.getElementById("swish")
+var swish = document.getElementById("swish");
+
+var click = document.getElementById("click");
+
 //svg.attr("width", width).attr("height", height)
 var completeData = [];
  
@@ -130,9 +133,26 @@ var setup = function(array2D)
             drawData(array2D, xScale, yScale, rectScale, "value")                
         })
     
+    
+    if(toggleWinCount == 0)
+                {
+                    d3.select(".winCount")
+                        .text("Show Win Count")
+                }
+            else
+                {
+                    d3.select(".winCount")
+                        .text("Hide Win Count")
+                    drawWins(array2D, xScale, yScale, rectScale, 0)
+                }
+    
+    
     d3.select(".winCount")
         .on("click", function()
         {
+            click.play()
+        
+        
             if(toggleWinCount == 0)
                 {
                     toggleWinCount = 1;
@@ -152,6 +172,7 @@ var setup = function(array2D)
                 }
                 
         })
+    
     drawData(array2D, xScale, yScale, rectScale, "FacebookFans")
     
     
@@ -184,12 +205,13 @@ var drawWins = function(array2D, xScale, circleYScale, rectScale, data)
 } //closes drawWins
 
 
+
+
 var removeWins = function()
 {
     d3.selectAll("#winGraph *")
         .remove()
 }
-
 
 
 
@@ -204,7 +226,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
         .duration(1000)
         .attr("href", function(team)
         {
-        console.log("team value", team.value);
+        //console.log("team value", team.value);
         return "../nbaLogos/" + team.imageTitle + ".svg"
         })
         .attr("x", function(num, index)
@@ -225,7 +247,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "twitterFans")
             {
-                return yScale(team.value) - 35
+                return yScale(parseInt(team.value)) - 35
             }
         })
         .attr("width", "40px")
@@ -244,7 +266,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             //console.log("twitterfans", team.twitterFans)
             if(data == "FacebookFans")
             {
-            return rectScale(team.FacebookFans)
+                    return rectScale(team.FacebookFans)
             }
             else if(data == "twitterFans")
             {
@@ -252,7 +274,8 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    return rectScale(team.value)
+                    console.log("team.value", parseInt(team.value))
+                    return rectScale(parseInt(team.value))
             }
         })
         .attr("y", function(team)
@@ -267,10 +290,14 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    return yScale(team.value)
+                    return yScale(parseInt(team.value))
             }
             })
 }//closes drawData
+
+
+
+
 
 
 
@@ -301,7 +328,10 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
             e.preventDefault
             window.location.href="https://www.nba.com/"
         })
-        .on("mouseover", function(team, index){
+    
+    
+                //TOOLTIP AND INFO DIV
+        .on("mouseover", function(team, index){ 
         //console.log("event", event)
         d3.select("#tooltip")
                     .style("left", (d3.event.pageX + 10) + "px")
@@ -309,14 +339,42 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
                     .text("Team: " + team.Team + " " + "Facebook Fans: " + team.FacebookFans + " " + "Wins: " + team.wins)
                     .classed("hidden", false)
         
+        d3.selectAll(".left *")
+            .remove()
+        
+        d3.select(".left")
+            .append("h2")
+            .text(function(d)
+            {
+                return team.Team;
+            })
+            .append("h4")
+            .text(function(d)
+            {
+                return "Facebook Fans: " + team.FacebookFans + "million";
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Twitter Fans: " + team.twitterFans + "million"; 
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Wins last season: " + team.wins; 
+            })
         d3.select(this)
             .attr("width", "60px")
         })
+    
         .on("mouseout",function(){
         d3.select("#tooltip").classed("hidden",true)
         d3.select(this)
             .attr("width", "40px")
-        })
+        
+        
+        }) //TOOLTIPS AND INFO DIVS
+    
     
    // RECTANGLES FOR BAR CHART
     teams.append("rect")
@@ -333,4 +391,5 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
             return yScale(team.FacebookFans) 
         })
     //RECTANGLES FOR BAR CHART 
+    
 } //closes drawOldData
