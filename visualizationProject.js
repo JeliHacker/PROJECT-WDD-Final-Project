@@ -4,6 +4,7 @@ var margins = {top: 10, right: 50, bottom: 50, left:50}
 var svg = d3.select("svg");
 
 var toggleWinCount = 1;
+var toggleCursor = 1;
 
 var swish = document.getElementById("swish");
 
@@ -61,6 +62,10 @@ var setup = function(array2D)
                     .domain([0, 40])
                     .range([height, 0])
     
+    var yScale = d3.scaleLinear()
+                    .domain([0, 40])
+                    .range([height, 0])
+    
     var rectScale = d3.scaleLinear()
                     .domain([0, 40])
                     .range([0, height])
@@ -94,7 +99,7 @@ var setup = function(array2D)
             //AXES
             //
     
-    drawOldData(array2D, xScale, yScale, rectScale, 0)
+    
     
     d3.select(".facebookFans").on("click", 
         function()
@@ -104,7 +109,7 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, 0)
+            drawOldData(array2D, xScale, yScale, rectScale, "twitterFans")
         
             drawData(array2D, xScale, yScale, rectScale, "FacebookFans")
         })
@@ -117,7 +122,7 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, 0)
+            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
         
             drawData(array2D, xScale, yScale, rectScale, "twitterFans")
         })
@@ -128,26 +133,34 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, 0)
+            drawOldData(array2D, xScale, yScale, rectScale, "value")
         
             drawData(array2D, xScale, yScale, rectScale, "value")                
         })
     
     
+    
+    
+    
+    
+    
+    
+    
+    //TOGGLE WIN COUNT
     if(toggleWinCount == 0)
                 {
-                    d3.select(".winCount")
+                    d3.select(".right .winCount")
                         .text("Show Win Count")
                 }
             else
                 {
-                    d3.select(".winCount")
+                    d3.select(".right .winCount")
                         .text("Hide Win Count")
                     drawWins(array2D, xScale, yScale, rectScale, 0)
                 }
     
     
-    d3.select(".winCount")
+    d3.select(".right .winCount")
         .on("click", function()
         {
             click.play()
@@ -156,7 +169,7 @@ var setup = function(array2D)
             if(toggleWinCount == 0)
                 {
                     toggleWinCount = 1;
-                    d3.select(".winCount")
+                    d3.select(".right .winCount")
                         .text("Hide Win Count")
                     
                     drawWins(array2D, xScale, yScale, rectScale, 0)
@@ -164,7 +177,7 @@ var setup = function(array2D)
             else
                 {
                     toggleWinCount = 0;
-                    d3.select(".winCount")
+                    d3.select(".right .winCount")
                         .text("Show Win Count")
                     
                     removeWins();
@@ -172,7 +185,52 @@ var setup = function(array2D)
                 }
                 
         })
+    //END OF TOGGLE WIN COUNT
+    //TOGGLE CURSOR
+    if(toggleCursor == 0)
+                {
+                    d3.select(".right .toggleCursor")
+                        .text("Turn on Custom Cursor")
+                    
+                    d3.select("body")
+                        .attr("style", "cursor: auto")
+                }
+            else
+                {
+                    d3.select(".right .toggleCursor")
+                        .text("Turn off Custom Cursor")
+                    
+                }
     
+    
+    d3.select(".right .toggleCursor")
+        .on("click", function()
+        {
+            click.play()
+        
+        
+            if(toggleCursor == 0)
+                {
+                    toggleCursor = 1;
+                    d3.select(".right .toggleCursor")
+                        .text("Turn off Custom Cursor")
+                    
+                    d3.select("body")
+                        .attr("style", "cursor:" +  "url('Basketball.cur'), auto;")
+                }
+            else
+                {
+                    toggleCursor = 0;
+                    d3.select(".right .toggleCursor")
+                        .text("Turn on Custom Cursor")
+                    
+                    d3.select("body")
+                        .attr("style", "cursor: auto;")
+                }
+                
+        })
+    //END OF TOGGLE CURSOR
+    drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
     drawData(array2D, xScale, yScale, rectScale, "FacebookFans")
     
     
@@ -219,6 +277,21 @@ var removeWins = function()
 var drawData = function(array2D, xScale, yScale, rectScale, data)
 {
     var teams = d3.select("#graph1")
+    
+        if(data == "FacebookFans")
+        {
+            console.log("data", data)
+            
+//        d3.selectAll("#yAxis *")
+//                .remove()
+//          
+//           d3.select(".axis")
+//            .append("g")
+//            .attr("id", "yAxis")
+//            .attr("transform", "translate(25," + margins.top + ")")
+//            .call(yAxis)
+        }
+    
     
         teams.selectAll("image")
         .data(array2D)
@@ -274,7 +347,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    console.log("team.value", parseInt(team.value))
+                    //console.log("team.value", parseInt(team.value))
                     return rectScale(parseInt(team.value))
             }
         })
@@ -301,7 +374,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
 
 
 
-var drawOldData = function(array2D, xScale, yScale, rectScale, index)
+var drawOldData = function(array2D, xScale, yScale, rectScale, data)
 {
     var teams = d3.select("#graph1")
         .selectAll("g")
@@ -320,7 +393,18 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
         })
         .attr("y", function(team)
         {
-            return -10 //ACCOUNT FOR NEAT INTRO ANIMATION
+            if(data == "FacebookFans")
+            {
+                    return yScale(team.FacebookFans) -35
+            }
+            else if(data == "twitterFans")
+            {
+                    return yScale(team.twitterFans) -35
+            }
+            else if(data == "value")
+            {
+                    return yScale(parseInt(team.value)) - 35
+            }  //ACCOUNT FOR NEAT INTRO ANIMATION
         })
         .attr("width", "40px")
         .on("click", function(e)
@@ -376,6 +460,11 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
         }) //TOOLTIPS AND INFO DIVS
     
     
+    
+    
+    
+    
+    
    // RECTANGLES FOR BAR CHART
     teams.append("rect")
         .attr("x", function(num, index)
@@ -384,11 +473,34 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, index)
         })
         .attr("width", "10px")
         .attr("height", function(team){
-            return rectScale(team.FacebookFans) 
+            if(data == "FacebookFans")
+            {
+                    return rectScale(team.FacebookFans)
+            }
+            else if(data == "twitterFans")
+            {
+                    return rectScale(team.twitterFans)
+            }
+            else if(data == "value")
+            {
+                    //console.log("team.value", parseInt(team.value))
+                    return rectScale(parseInt(team.value))
+            }
         })
         .attr("y", function(team, index)
         {
-            return yScale(team.FacebookFans) 
+            if(data == "FacebookFans")
+            {
+                    return yScale(team.FacebookFans) 
+            }
+            else if(data == "twitterFans")
+            {
+                    return yScale(team.twitterFans)
+            }
+            else if(data == "value")
+            {
+                    return Scale(parseInt(team.value))
+            } 
         })
     //RECTANGLES FOR BAR CHART 
     

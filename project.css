@@ -3,6 +3,7 @@ body{
     text-align: center;
     margin: 0px;
     font-family: "Helvetica";
+    cursor: url("Basketball.cur"), auto;
 }
 
 svg{
@@ -10,7 +11,7 @@ svg{
     height: 625px;
     border: 1px solid black;
     position: relative;
-    left: auto;
+    
 }
 
 .notes{
@@ -139,10 +140,11 @@ width: 40px;
 .left
 {
     
-    background-color: aliceblue;
+    background-color: #66FCF1;
     float:left;
-    border: 1px solid black;
-    height: 625px;
+    border: 5px solid black;
+    border-radius: 25px;
+    height: 610px;
     width: 15%;
     margin-left: 1%;
     vertical-align: middle;
@@ -177,6 +179,45 @@ width: 40px;
 }
 
 .notes2:active
+{
+    background-color: red;
+}
+
+
+.right
+{
+    
+    background-color: #66FCF1;
+    float:right;
+    border: 5px solid black;
+    border-radius: 15px;
+    height: 610px;
+    width: 10.4%;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 205px;
+    margin-right: 10px;
+}
+
+.right *
+{
+    line-height: 45px;
+}
+
+.right h4
+{
+    font-size: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #ff6961;
+}
+
+.right .toggleCursor
+{
+    clear: right;
+}
+
+.right h4:hover
 {
     background-color: red;
 }
