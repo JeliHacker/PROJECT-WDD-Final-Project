@@ -178,7 +178,9 @@ var drawWins = function(array2D, xScale, circleYScale, rectScale, data)
             console.log("team.wins", team.wins)
             return  circleYScale(team.wins/2)
         })
-        .attr("r", 15)
+        .attr("r", 10)
+        .attr("fill", "green")
+        .attr("fill-opacity", "0.4")
 } //closes drawWins
 
 
