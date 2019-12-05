@@ -305,7 +305,72 @@ var drawWins = function(array2D, xScale, circleYScale, rectScale, data)
         .data(array2D)
         .enter()
     
+    
+    
     wins1.append("circle")
+    .on("mouseover", function(team, index){ 
+        //console.log("event", event)
+        d3.select("#tooltip")
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY + 18) + "px")
+                    .text("Team: " + team.Team + " " + "Facebook Fans: " + team.FacebookFans + " " + "Wins: " + team.wins)
+                    .classed("hidden", false)
+        
+        d3.selectAll(".left *")
+            .remove()
+        
+        d3.select(".left")
+            .append("h2")
+            .text(function(d)
+            {
+                return team.Team;
+            })
+            .append("h3")
+            .text(function(d)
+            {
+                return "Team Value: " + team.value;
+            })
+            .append("h4")
+            .text(function(d)
+            {
+                return "Facebook Fans: " + team.FacebookFans + "million";
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Twitter Fans: " + team.twitterFans + "million"; 
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Wins last season: " + team.wins; 
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Home Game Attendance: " + team.attendance;
+        })
+        d3.select(this)
+            .attr("r", "15px")
+            .attr("fill", "orange")
+        })
+    
+    
+    
+    
+    
+    
+    
+        .on("mouseout",function(){
+        d3.select("#tooltip").classed("hidden",true)
+        
+        d3.select(this)
+            .attr("width", "40px")
+            .attr("r", "10px")
+            .attr("fill", "green")
+        
+        
+        })
         .attr("id", "winGraph")
         .attr("cx", function(team, index)
         {
@@ -615,6 +680,54 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
     
    // RECTANGLES FOR BAR CHART
     teams.append("rect")
+    .on("mouseover", function(team, index){ 
+        //console.log("event", event)
+        d3.select("#tooltip")
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY + 18) + "px")
+                    .text("Team: " + team.Team + " " + "Facebook Fans: " + team.FacebookFans + " " + "Wins: " + team.wins)
+                    .classed("hidden", false)
+        
+        d3.selectAll(".left *")
+            .remove()
+        
+        d3.select(".left")
+            .append("h2")
+            .text(function(d)
+            {
+                return team.Team;
+            })
+            .append("h3")
+            .text(function(d)
+            {
+                return "Team Value: " + team.value;
+            })
+            .append("h4")
+            .text(function(d)
+            {
+                return "Facebook Fans: " + team.FacebookFans + "million";
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Twitter Fans: " + team.twitterFans + "million"; 
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Wins last season: " + team.wins; 
+            })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Home Game Attendance: " + team.attendance;
+        })
+        })
+    
+        .on("mouseout",function(){
+        d3.select("#tooltip").classed("hidden",true) 
+        
+        })
         .attr("x", function(num, index)
         {
         return xScale(index) - 5;
