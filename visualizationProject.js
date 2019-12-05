@@ -328,7 +328,7 @@ var drawWins = function(array2D, xScale, circleYScale, rectScale, data)
             .append("h3")
             .text(function(d)
             {
-                return "Team Value: " + team.value;
+                return "Team Value: " + team.value + "million";
             })
             .append("h4")
             .text(function(d)
@@ -637,7 +637,7 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             .append("h3")
             .text(function(d)
             {
-                return "Team Value: " + team.value;
+                return "Team Value: " + team.value + "million";
             })
             .append("h4")
             .text(function(d)
@@ -700,7 +700,7 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             .append("h3")
             .text(function(d)
             {
-                return "Team Value: " + team.value;
+                return "Team Value: " + team.value + "million";
             })
             .append("h4")
             .text(function(d)
