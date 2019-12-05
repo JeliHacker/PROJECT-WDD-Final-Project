@@ -472,7 +472,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
         .attr("href", function(team)
         {
         //console.log("team value", team.value);
-        return "../nbaLogos/" + team.imageTitle + ".svg"
+        return team.imageTitle + ".svg"
         })
         .attr("x", function(num, index)
         {
