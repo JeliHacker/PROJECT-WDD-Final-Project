@@ -141,6 +141,7 @@ width: 40px;
 {
     
     background-color: #66FCF1;
+    background-color: #17408B;
     float:left;
     border: 5px solid black;
     border-radius: 25px;
@@ -155,6 +156,7 @@ width: 40px;
 .left *
 {
     line-height: 45px;
+    background-color: rgba(211, 211, 211, 0.5);
 }
 
 .left h4
@@ -188,6 +190,7 @@ width: 40px;
 {
     
     background-color: #66FCF1;
+    background-color: #C9082A;
     float:right;
     border: 5px solid black;
     border-radius: 15px;
@@ -209,7 +212,7 @@ width: 40px;
     font-size: 15px;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: #ff6961;
+    background-color: rgba(220, 220, 220, 0.8);
 }
 
 .right .toggleCursor
@@ -219,5 +222,5 @@ width: 40px;
 
 .right h4:hover
 {
-    background-color: red;
+    background-color: rgba(160, 160, 160, 0.8);
 }

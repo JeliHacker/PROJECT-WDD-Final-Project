@@ -282,14 +282,14 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
         {
             console.log("data", data)
             
-//        d3.selectAll("#yAxis *")
-//                .remove()
-//          
-//           d3.select(".axis")
-//            .append("g")
-//            .attr("id", "yAxis")
-//            .attr("transform", "translate(25," + margins.top + ")")
-//            .call(yAxis)
+        //d3.selectAll("#yAxis *")
+          //      .remove()
+          
+           d3.select("#yAxis")
+            .append("g")
+            .attr("id", "yAxis")
+            .attr("transform", "translate(25," + margins.top + ")")
+            .call(yAxis)
         }
     
     
