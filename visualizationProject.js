@@ -62,10 +62,6 @@ var setup = function(array2D)
                     .domain([0, 40])
                     .range([height, 0])
     
-    var yScale = d3.scaleLinear()
-                    .domain([0, 40])
-                    .range([height, 0])
-    
     var rectScale = d3.scaleLinear()
                     .domain([0, 40])
                     .range([0, height])
@@ -104,6 +100,19 @@ var setup = function(array2D)
     d3.select(".facebookFans").on("click", 
         function()
         {
+            //console.log("this", this)
+            d3.select(".twitterFans")
+                .attr("style", "color:black")
+        
+            d3.select(".value")
+                .attr("style", "color:black")
+        
+            d3.select(".attendance")
+                .attr("style", "color:black")
+        
+            d3.select(this)
+                .attr("style", "color: white")
+        
             //svg.append("image").attr("href", "../nbaLogos/" + "BOS.svg").attr("width", "50px")
             swish.play()
         
@@ -117,11 +126,23 @@ var setup = function(array2D)
         function()
         {
             //svg.append("image").attr("href", "../nbaLogos/" + "BOS.svg").attr("width", "50px")
+            d3.select(".value")
+                .attr("style", "color:black")
+        
+            d3.select(".FacebookFans")
+                .attr("style", "color:black")
+        
+            d3.select(".attendance")
+                .attr("style", "color:black")
+        
+            d3.select(this)
+                .attr("style", "color: white")
+        
         
             swish.play()
         
             clearInfo("#graph1") 
-        
+            
             drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
         
             drawData(array2D, xScale, yScale, rectScale, "twitterFans")
@@ -129,13 +150,50 @@ var setup = function(array2D)
     d3.select(".value").on("click",
         function()
         {
+            d3.select(".twitterFans")
+                .attr("style", "color:black")
+        
+            d3.select(".FacebookFans")
+                .attr("style", "color:black")
+        
+            d3.select(".attendance")
+                .attr("style", "color:black")
+        
+            d3.select(this)
+                .attr("style", "color: white")
+        
+        
             swish.play()
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, "value")
+            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
         
             drawData(array2D, xScale, yScale, rectScale, "value")                
+        })
+    d3.select(".attendance").on("click",
+        function()
+        {
+            d3.select(".twitterFans")
+                .attr("style", "color:black")
+        
+            d3.select(".FacebookFans")
+                .attr("style", "color:black")
+        
+            d3.select(".value")
+                .attr("style", "color:black")
+        
+            d3.select(this)
+                .attr("style", "color: white")
+        
+        
+            swish.play()
+        
+            clearInfo("#graph1")
+            
+            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
+        
+            drawData(array2D, xScale, yScale, rectScale, "attendance")         
         })
     
     
@@ -230,8 +288,9 @@ var setup = function(array2D)
                 
         })
     //END OF TOGGLE CURSOR
-    drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
-    drawData(array2D, xScale, yScale, rectScale, "FacebookFans")
+    
+    drawOldData(array2D, xScale, yScale, rectScale, "value")
+    drawData(array2D, xScale, yScale, rectScale, "value")
     
     
 } //THIS CLOSES setup function!!!
@@ -278,17 +337,65 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
 {
     var teams = d3.select("#graph1")
     
-        if(data == "FacebookFans")
+    var width= screen.width - margins.left-margins.right;
+    var height = screen.height - margins.top - margins.bottom;
+    
+    var xScale = d3.scaleLinear()
+                    .domain([0, 30])
+                    .range([0,width])
+    
+    var yScale = d3.scaleLinear()
+                    .domain([0, 40])
+                    .range([height, 0])
+    
+    var yScaleValue = d3.scaleLinear()
+                    .domain([0, 5000])
+                    .range([height, 0])
+    
+    var yScaleAttendance = d3.scaleLinear()
+                        .domain([0, 25000])
+                        .range([height, 0])
+    
+     var rectScaleValue = d3.scaleLinear()
+                    .domain([0, 5000])
+                    .range([0, height])
+     
+     var rectScaleAttendance = d3.scaleLinear()
+                        .domain([0, 25000])
+                        .range([0, height])
+    
+    var yAxisValue = d3.axisLeft(yScaleValue)
+    
+    var yAxis = d3.axisLeft(yScale)
+    
+    var yAxisAttendance = d3.axisLeft(yScaleAttendance)
+    
+        if(data == "value")
         {
             console.log("data", data)
             
-        //d3.selectAll("#yAxis *")
-          //      .remove()
+        d3.selectAll("#yAxis *")
+                .remove()
           
-           d3.select("#yAxis")
-            .append("g")
-            .attr("id", "yAxis")
-            .attr("transform", "translate(25," + margins.top + ")")
+        d3.select("#yAxis")
+            .attr("transform", "translate(45," + margins.top + ")")
+            .call(yAxisValue)
+            
+        }else if(data == "attendance")
+        {
+            d3.selectAll("#yAxis *")
+                .remove()
+            
+            d3.select("#yAxis")
+            .attr("transform", "translate(45," + margins.top + ")")
+            .call(yAxisAttendance)
+        }else if(data == "FacebookFans" || data == "twitterFans")
+        {
+            d3.selectAll("#yAxis *")
+                .remove()
+            
+            d3.select("#yAxis")
+            .attr("transform", "translate(45," + margins.top + ")")
             .call(yAxis)
         }
     
@@ -318,9 +425,13 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             {
                     return yScale(team.twitterFans) - 35
             }
-            else if(data == "twitterFans")
+            else if(data == "value")
             {
-                return yScale(parseInt(team.value)) - 35
+                return yScaleValue(parseInt(team.value)) - 35
+            }
+            else if(data == "attendance")
+            {
+                return yScaleAttendance(parseInt(team.attendance)) -35
             }
         })
         .attr("width", "40px")
@@ -348,7 +459,11 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             else if(data == "value")
             {
                     //console.log("team.value", parseInt(team.value))
-                    return rectScale(parseInt(team.value))
+                    return rectScaleValue(parseInt(team.value))
+            }
+            else if(data == "attendance")
+            {
+                return rectScaleAttendance(parseInt(team.attendance))
             }
         })
         .attr("y", function(team)
@@ -363,8 +478,13 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    return yScale(parseInt(team.value))
+                    return yScaleValue(parseInt(team.value))
             }
+            else if(data == "attendance")
+            {
+                    return yScaleAttendance(team.attendance)
+            }
+            
             })
 }//closes drawData
 
@@ -376,6 +496,18 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
 
 var drawOldData = function(array2D, xScale, yScale, rectScale, data)
 {
+    var width= screen.width - margins.left-margins.right;
+    var height = screen.height - margins.top - margins.bottom;
+    
+    var yScaleValue = d3.scaleLinear()
+                    .domain([0, 5000])
+                    .range([height, 0])
+     
+    
+     var rectScaleValue = d3.scaleLinear()
+                    .domain([0, 5000])
+                    .range([0, height])
+     
     var teams = d3.select("#graph1")
         .selectAll("g")
         .data(array2D)
@@ -403,8 +535,13 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    return yScale(parseInt(team.value)) - 35
-            }  //ACCOUNT FOR NEAT INTRO ANIMATION
+                    return yScaleValue(parseInt(team.value)) - 35
+            }
+            else if(data == "attendance")
+            {
+                    return yScale(parseInt(team.attendance)) - 35
+            }
+        
         })
         .attr("width", "40px")
         .on("click", function(e)
@@ -432,6 +569,11 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             {
                 return team.Team;
             })
+            .append("h3")
+            .text(function(d)
+            {
+                return "Team Value: " + team.value;
+            })
             .append("h4")
             .text(function(d)
             {
@@ -447,12 +589,18 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             {
                 return "Wins last season: " + team.wins; 
             })
+        .append("h4")
+            .text(function(d)
+            {
+                return "Home Game Attendance: " + team.attendance;
+        })
         d3.select(this)
             .attr("width", "60px")
         })
     
         .on("mouseout",function(){
         d3.select("#tooltip").classed("hidden",true)
+        
         d3.select(this)
             .attr("width", "40px")
         
@@ -484,7 +632,7 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             else if(data == "value")
             {
                     //console.log("team.value", parseInt(team.value))
-                    return rectScale(parseInt(team.value))
+                    return rectScaleValue(parseInt(team.value))
             }
         })
         .attr("y", function(team, index)
@@ -499,7 +647,7 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "value")
             {
-                    return Scale(parseInt(team.value))
+                    return yScaleValue(parseInt(team.value))
             } 
         })
     //RECTANGLES FOR BAR CHART 
