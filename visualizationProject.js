@@ -560,7 +560,7 @@ var drawData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "attendance")
             {
-                    return yScaleAttendance(team.attendance)
+                    return yScaleAttendance(parseInt(team.attendance))
             }
             
             })
@@ -585,6 +585,14 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
      var rectScaleValue = d3.scaleLinear()
                     .domain([0, 5000])
                     .range([0, height])
+     
+     var yScaleAttendance = d3.scaleLinear()
+                        .domain([0, 25000])
+                        .range([height, 0])
+     
+     var rectScaleAttendance = d3.scaleLinear()
+                        .domain([0, 25000])
+                        .range([0, height])
      
     var teams = d3.select("#graph1")
         .selectAll("g")
@@ -617,7 +625,7 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             }
             else if(data == "attendance")
             {
-                    return yScale(parseInt(team.attendance)) - 35
+                    return yScaleAttendance(parseInt(team.attendance)) - 35
             }
         
         })
@@ -760,6 +768,10 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
                     //console.log("team.value", parseInt(team.value))
                     return rectScaleValue(parseInt(team.value))
             }
+            else if(data == "attendance")
+            {
+                    return rectScaleAttendance(parseInt(team.attendance))
+            }
         })
         .attr("y", function(team, index)
         {
@@ -774,7 +786,11 @@ var drawOldData = function(array2D, xScale, yScale, rectScale, data)
             else if(data == "value")
             {
                     return yScaleValue(parseInt(team.value))
-            } 
+            }
+            else if(data == "attendance")
+            {
+                    return yScaleAttendance(parseInt(team.attendance))
+            }
         })
     //RECTANGLES FOR BAR CHART 
     
