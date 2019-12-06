@@ -3,6 +3,8 @@ var margins = {top: 10, right: 50, bottom: 50, left:50}
 
 var svg = d3.select("svg");
 
+//COUNTERS AND GLOBAL VARIABLES
+
 var toggleWinCount = 1;
 var toggleCursor = 1;
 
@@ -10,6 +12,9 @@ var swish = document.getElementById("swish");
 
 var click = document.getElementById("click");
 
+var dimension = "value";
+
+//COUNTERS AND GLOBAL VARIABLES//
 //svg.attr("width", width).attr("height", height)
 var completeData = [];
  
@@ -96,7 +101,7 @@ var setup = function(array2D)
             //
     
     
-    
+    //CHOOSE DIMENSION
     d3.select(".facebookFans").on("click", 
         function()
         {
@@ -118,7 +123,9 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, "twitterFans")
+            drawOldData(array2D, xScale, yScale, rectScale, dimension)
+        
+            dimension = "FacebookFans"
         
             drawData(array2D, xScale, yScale, rectScale, "FacebookFans")
         })
@@ -143,7 +150,9 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
             
-            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
+            drawOldData(array2D, xScale, yScale, rectScale, dimension)
+        
+            dimension = "twitterFans"
         
             drawData(array2D, xScale, yScale, rectScale, "twitterFans")
         })
@@ -167,7 +176,9 @@ var setup = function(array2D)
         
             clearInfo("#graph1") 
         
-            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
+            drawOldData(array2D, xScale, yScale, rectScale, dimension)
+        
+            dimension = "value"
         
             drawData(array2D, xScale, yScale, rectScale, "value")                
         })
@@ -191,10 +202,12 @@ var setup = function(array2D)
         
             clearInfo("#graph1")
             
-            drawOldData(array2D, xScale, yScale, rectScale, "FacebookFans")
+            drawOldData(array2D, xScale, yScale, rectScale, dimension)
         
+            dimension = "attendance"
             drawData(array2D, xScale, yScale, rectScale, "attendance")         
         })
+    //CHOOSE DIMENSION//
     
     
     
